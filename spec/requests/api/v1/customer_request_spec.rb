@@ -2,94 +2,193 @@ require 'rails_helper'
 
 describe "Customers API" do
 
-  it "sends the list of customers" do
-    # test customer index api
-    create_list(:customer, 3)
+  describe 'Index and Show Requess' do
 
-    get '/api/v1/customers'
+    it "sends the list of customers" do
+      # test customer index api
+      create_list(:customer, 3)
 
-    expect(response).to be_successful
+      get '/api/v1/customers'
 
-    customers = JSON.parse(response.body)
+      expect(response).to be_successful
 
-    expect(customers.count).to eq(3)
+      customers = JSON.parse(response.body)
+
+      expect(customers.count).to eq(3)
+    end
+
+    it "sends a single customer by id" do
+      # test customer show api
+      id = create(:customer).id
+
+      get "/api/v1/customers/#{id}"
+
+      expect(response).to be_successful
+
+      customer = JSON.parse(response.body)
+
+      expect(customer["id"]).to eq(id)
+    end
+
   end
 
-  it "sends a single customer by id" do
-    # test customer show api
-    id = create(:customer).id
+  describe 'Find Requests' do
 
-    get "/api/v1/customers/#{id}"
+    it "can find a customer by their id" do
+      id = create(:customer).id
 
-    expect(response).to be_successful
+      get "/api/v1/customers/find?id=#{id}"
 
-    customer = JSON.parse(response.body)
+      expect(response).to be_successful
 
-    expect(customer["id"]).to eq(id)
+      customer = JSON.parse(response.body)
+
+      expect(customer["id"]).to eq(id)
+    end
+
+    it "can find a customer by their first name" do
+      first_name = create(:customer).first_name
+
+      get "/api/v1/customers/find?first_name=#{first_name}"
+
+      expect(response).to be_successful
+
+      customer = JSON.parse(response.body)
+
+      expect(customer["first_name"]).to eq(first_name)
+    end
+
+    it "can find a customer by their last name" do
+      last_name = create(:customer).last_name
+
+      get "/api/v1/customers/find?last_name=#{last_name}"
+
+      expect(response).to be_successful
+
+      customer = JSON.parse(response.body)
+
+      expect(customer["last_name"]).to eq(last_name)
+    end
+
+    it "can find a customer by their created_at datetime" do
+      customer = create(:customer, created_at: '2012-03-27 14:53:59 UTC')
+      created_at = customer.created_at
+      id = customer.id
+
+      get "/api/v1/customers/find?created_at=#{created_at}"
+
+      expect(response).to be_successful
+
+      json_customer = JSON.parse(response.body)
+
+      expect(json_customer["id"]).to eq(id)
+    end
+
+    it "can find a customer by their updated_at datetime" do
+      customer = create(:customer, updated_at: '2012-03-27 14:53:59 UTC')
+      updated_at = customer.updated_at
+      id = customer.id
+
+      get "/api/v1/customers/find?updated_at=#{updated_at}"
+
+      expect(response).to be_successful
+
+      json_customer = JSON.parse(response.body)
+
+      expect(json_customer["id"]).to eq(id)
+    end
+
   end
 
-  it "can find a customer by their id" do
-    id = create(:customer).id
+  describe 'Find_all Requests' do
 
-    get "/api/v1/customers/find?id=#{id}"
+    it "can find all customers by an id" do
+      id_1 = create(:customer).id
+      id_2 = create(:customer).id
+      id_3 = create(:customer).id
 
-    expect(response).to be_successful
+      get "/api/v1/customers/find_all?id=#{id_1}"
 
-    customer = JSON.parse(response.body)
+      expect(response).to be_successful
 
-    expect(customer["id"]).to eq(id)
-  end
+      customer_array = JSON.parse(response.body)
 
-  it "can find a customer by their first name" do
-    first_name = create(:customer).first_name
+      expect(customer_array.length).to eq(1)
+      expect(customer_array.first["id"]).to eq(id_1)
+    end
 
-    get "/api/v1/customers/find?first_name=#{first_name}"
+    it "can find all customers by a first name" do
+      first_name_1 = create(:customer, first_name: 'Bob').first_name
+      first_name_2 = create(:customer, first_name: 'Robert').first_name
+      first_name_3 = create(:customer, first_name: 'Bob').first_name
 
-    expect(response).to be_successful
+      get "/api/v1/customers/find_all?first_name=#{first_name_1}"
 
-    customer = JSON.parse(response.body)
+      expect(response).to be_successful
 
-    expect(customer["first_name"]).to eq(first_name)
-  end
+      customer_array = JSON.parse(response.body)
 
-  it "can find a customer by their last name" do
-    last_name = create(:customer).last_name
+      expect(customer_array.length).to eq(2)
+      expect(customer_array.first["first_name"]).to eq(first_name_1)
+      expect(customer_array.last["first_name"]).to eq(first_name_1)
+    end
 
-    get "/api/v1/customers/find?last_name=#{last_name}"
+    it "can find all customers by a last name" do
+      last_name_1 = create(:customer, last_name: 'Shade').last_name
+      last_name_2 = create(:customer, last_name: 'Bond').last_name
+      last_name_3 = create(:customer, last_name: 'Shade').last_name
 
-    expect(response).to be_successful
+      get "/api/v1/customers/find_all?last_name=#{last_name_1}"
 
-    customer = JSON.parse(response.body)
+      expect(response).to be_successful
 
-    expect(customer["last_name"]).to eq(last_name)
-  end
+      customer_array = JSON.parse(response.body)
 
-  it "can find a customer by their created_at datetime" do
-    customer = create(:customer, created_at: '2012-03-27 14:53:59 UTC')
-    created_at = customer.created_at
-    id = customer.id
+      expect(customer_array.length).to eq(2)
+      expect(customer_array.first["last_name"]).to eq(last_name_1)
+      expect(customer_array.last["last_name"]).to eq(last_name_1)
+    end
 
-    get "/api/v1/customers/find?created_at=#{created_at}"
+    it "can find all customers by a created_at datetime" do
+      customer_1 = create(:customer, created_at: '2012-03-27 14:53:59 UTC')
+      customer_2 = create(:customer, created_at: '2012-04-27 12:53:59 UTC')
+      customer_3 = create(:customer, created_at: '2012-03-27 14:53:59 UTC')
+      created_at = customer_1.created_at
+      id_1 = customer_1.id
+      id_2 = customer_2.id
+      id_3 = customer_3.id
 
-    expect(response).to be_successful
+      get "/api/v1/customers/find_all?created_at=#{created_at}"
 
-    json_customer = JSON.parse(response.body)
+      expect(response).to be_successful
 
-    expect(json_customer["id"]).to eq(id)
-  end
+      json_customer_array = JSON.parse(response.body)
 
-  it "can find a customer by their updated_at datetime" do
-    customer = create(:customer, updated_at: '2012-03-27 14:53:59 UTC')
-    updated_at = customer.updated_at
-    id = customer.id
+      expect(json_customer_array.length).to eq(2)
+      expect(json_customer_array.first["id"]).to eq(id_1)
+      expect(json_customer_array.last["id"]).to eq(id_3)
+    end
 
-    get "/api/v1/customers/find?updated_at=#{updated_at}"
+    it "can find all customers by a updated_at datetime" do
+      customer_1 = create(:customer, updated_at: '2012-03-27 14:53:59 UTC')
+      customer_2 = create(:customer, updated_at: '2012-04-27 12:53:59 UTC')
+      customer_3 = create(:customer, updated_at: '2012-03-27 14:53:59 UTC')
+      updated_at = customer_1.updated_at
+      id_1 = customer_1.id
+      id_2 = customer_2.id
+      id_3 = customer_3.id
 
-    expect(response).to be_successful
+      get "/api/v1/customers/find_all?updated_at=#{updated_at}"
 
-    json_customer = JSON.parse(response.body)
+      expect(response).to be_successful
 
-    expect(json_customer["id"]).to eq(id)
+      json_customer_array = JSON.parse(response.body)
+
+      expect(json_customer_array.length).to eq(2)
+      expect(json_customer_array.first["id"]).to eq(id_1)
+      expect(json_customer_array.last["id"]).to eq(id_3)
+    end
+
   end
 
 end

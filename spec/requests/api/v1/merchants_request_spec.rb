@@ -4,7 +4,7 @@ describe "Merchants API" do
 
   describe 'Index and Show Requests' do
 
-    it "sends the list of merchants" do
+    it "sends the list of all merchants" do
       # test merchant index api
       create_list(:merchant, 3)
 
@@ -17,7 +17,7 @@ describe "Merchants API" do
       expect(merchants.count).to eq(3)
     end
 
-    it "sends a single merchant by id" do
+    it "sends a single merchant" do
       # test merchant show api
       id = create(:merchant).id
 
@@ -90,7 +90,7 @@ describe "Merchants API" do
 
   describe 'Find_all Requests' do
 
-    it "can find any merchants with an id" do
+    it "can find all merchants by an id" do
       id_1 = create(:merchant).id
       id_2 = create(:merchant).id
       id_3 = create(:merchant).id
@@ -105,7 +105,7 @@ describe "Merchants API" do
       expect(merchant_array.first["id"]).to eq(id_1)
     end
 
-    it "can find all merchants with a name" do
+    it "can find all merchants by a name" do
       name_1 = create(:merchant, name: "Shady Bobs").name
       name_2 = create(:merchant, name: "Shady Bobs").name
       name_3 = create(:merchant, name: "Shady Bobs").name
@@ -122,7 +122,7 @@ describe "Merchants API" do
       expect(merchant_array.last["name"]).to eq(name_1)
     end
 
-    it "can find a merchant by their created_at datetime" do
+    it "can find all merchants by a created_at datetime" do
       merchant_1 = create(:merchant, created_at: '2012-03-27 14:53:59 UTC')
       merchant_2 = create(:merchant, created_at: '2012-04-27 12:53:59 UTC')
       merchant_3 = create(:merchant, created_at: '2012-03-27 14:53:59 UTC')
@@ -142,7 +142,7 @@ describe "Merchants API" do
       expect(json_merchant_array.last["id"]).to eq(id_3)
     end
 
-    it "can find a merchant by their updated_at datetime" do
+    it "can find all merchants by an updated_at datetime" do
       merchant_1 = create(:merchant, updated_at: '2012-03-27 14:53:59 UTC')
       merchant_2 = create(:merchant, updated_at: '2012-04-27 12:53:59 UTC')
       merchant_3 = create(:merchant, updated_at: '2012-03-27 14:53:59 UTC')
