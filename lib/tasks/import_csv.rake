@@ -1,10 +1,10 @@
 namespace :import do
 
   task all: :environment do
-    # customers = File.join Rails.root, "/data/customers.csv"
-    # CSV.foreach(customers, headers:true) do |row|
-    #   Customer.create(row.to_h)
-    # end
+    customers = File.join Rails.root, "/data/customers.csv"
+    CSV.foreach(customers, headers:true) do |row|
+      Customer.create(row.to_h)
+    end
     # invoice_items = File.join Rails.root, "/data/invoice_items.csv"
     # CSV.foreach(invoice_items, headers:true) do |row|
     #   InvoiceItem.create(row.to_h)

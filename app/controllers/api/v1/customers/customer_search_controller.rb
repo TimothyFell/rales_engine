@@ -1,7 +1,7 @@
 class Api::V1::Customers::CustomerSearchController < ApplicationController
 
   def index
-
+    render json: Customer.where(look_up_params)
   end
 
   def show

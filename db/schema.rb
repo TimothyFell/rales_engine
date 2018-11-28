@@ -22,21 +22,10 @@ ActiveRecord::Schema.define(version: 20181127225934) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "items", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.integer "unite_price"
-    t.bigint "merchant_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["merchant_id"], name: "index_items_on_merchant_id"
-  end
-
   create_table "merchants", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "items", "merchants"
 end

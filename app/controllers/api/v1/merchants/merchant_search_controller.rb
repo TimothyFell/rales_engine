@@ -1,7 +1,7 @@
 class Api::V1::Merchants::MerchantSearchController < ApplicationController
 
   def index
-
+    render json: Merchant.where(look_up_params)
   end
 
   def show
