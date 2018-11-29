@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'customers_fav_merch/show'
-
   namespace :api do
     namespace :v1 do
 
@@ -17,6 +15,13 @@ Rails.application.routes.draw do
         get '/find', to: 'customer_search#show'
       end
       resources :customers, only: [:index, :show]
+
+      namespace :items do
+        get '/:id/best_day', to: 'items_best_day#show'
+        get '/find_all', to: 'item_search#index'
+        get '/find', to: 'item_search#show'
+      end
+      resources :items, only: [:index, :show]
 
     end
   end
