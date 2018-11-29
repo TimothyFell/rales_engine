@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-describe "Customers API" do
+describe "Customer Record Endpoints" do
 
-  describe 'Index and Show Requess' do
+  describe 'Index and Show Requests' do
 
-    it "sends the list of customers" do
+    it "sends the list of all customers" do
       # test customer index api
       create_list(:customer, 3)
 
@@ -17,7 +17,7 @@ describe "Customers API" do
       expect(customers.count).to eq(3)
     end
 
-    it "sends a single customer by id" do
+    it "sends a single customer" do
       # test customer show api
       id = create(:customer).id
 

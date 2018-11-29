@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Merchants API" do
+describe "Merchants Record Endpoints" do
 
   describe 'Index and Show Requests' do
 
