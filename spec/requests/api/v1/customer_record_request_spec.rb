@@ -191,4 +191,29 @@ describe "Customer Record Endpoints" do
 
   end
 
+  describe 'Random Enpoint' do
+
+    it 'should return a random record' do
+      customer_1 = create(:customer)
+      customer_2 = create(:customer)
+      customer_3 = create(:customer)
+      customer_4 = create(:customer)
+      customer_5 = create(:customer)
+      customer_6 = create(:customer)
+      customer_7 = create(:customer)
+      customer_8 = create(:customer)
+      customer_9 = create(:customer)
+      customer_10 = create(:customer)
+
+      customer_ids = Customer.all.pluck(:id)
+
+      get '/api/v1/customers/random.json'
+
+      rand_cust = JSON.parse(response.body)["data"]
+
+      expect(customer_ids).to include(rand_cust["id"].to_i)
+    end
+
+  end
+
 end

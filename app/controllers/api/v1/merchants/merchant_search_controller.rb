@@ -5,7 +5,11 @@ class Api::V1::Merchants::MerchantSearchController < ApplicationController
   end
 
   def show
-    render json: Merchant.find_by(look_up_params)
+    if look_up_params != nil
+      render json: Merchant.find_by(look_up_params)
+    else
+      render json: Merchant.random
+    end
   end
 
   private
