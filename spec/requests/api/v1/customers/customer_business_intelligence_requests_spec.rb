@@ -26,10 +26,10 @@ describe "Customer Business Intelligence Endpoints" do
 
       get "/api/v1/customers/#{c_id}/favorite_merchant"
 
-      returned_merch = JSON.parse(response.body)
+      returned_merch = JSON.parse(response.body)["data"]["attributes"]
 
       expect(returned_merch["id"]).to eq(merch_2_id)
-      expect(returned_merch["merchant_transactions"]).to eq(3)
+      expect(returned_merch["name"]).to eq(merch_2.name)
     end
 
   end

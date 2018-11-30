@@ -12,7 +12,7 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      customers = JSON.parse(response.body)
+      customers = JSON.parse(response.body)["data"]
 
       expect(customers.count).to eq(3)
     end
@@ -25,9 +25,9 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
 
-      expect(customer["id"]).to eq(id)
+      expect(customer["id"].to_i).to eq(id)
     end
 
   end
@@ -41,9 +41,9 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
 
-      expect(customer["id"]).to eq(id)
+      expect(customer["id"].to_i).to eq(id)
     end
 
     it "can find a customer by their first name" do
@@ -53,9 +53,9 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
 
-      expect(customer["first_name"]).to eq(first_name)
+      expect(customer["attributes"]["first_name"]).to eq(first_name)
     end
 
     it "can find a customer by their last name" do
@@ -65,9 +65,9 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
 
-      expect(customer["last_name"]).to eq(last_name)
+      expect(customer["attributes"]["last_name"]).to eq(last_name)
     end
 
     it "can find a customer by their created_at datetime" do
@@ -79,9 +79,9 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      json_customer = JSON.parse(response.body)
+      json_customer = JSON.parse(response.body)["data"]
 
-      expect(json_customer["id"]).to eq(id)
+      expect(json_customer["id"].to_i).to eq(id)
     end
 
     it "can find a customer by their updated_at datetime" do
@@ -93,9 +93,9 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      json_customer = JSON.parse(response.body)
+      json_customer = JSON.parse(response.body)["data"]
 
-      expect(json_customer["id"]).to eq(id)
+      expect(json_customer["id"].to_i).to eq(id)
     end
 
   end
@@ -111,10 +111,10 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      customer_array = JSON.parse(response.body)
+      customer_array = JSON.parse(response.body)["data"]
 
       expect(customer_array.length).to eq(1)
-      expect(customer_array.first["id"]).to eq(id_1)
+      expect(customer_array.first["id"].to_i).to eq(id_1)
     end
 
     it "can find all customers by a first name" do
@@ -126,11 +126,11 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      customer_array = JSON.parse(response.body)
+      customer_array = JSON.parse(response.body)["data"]
 
       expect(customer_array.length).to eq(2)
-      expect(customer_array.first["first_name"]).to eq(first_name_1)
-      expect(customer_array.last["first_name"]).to eq(first_name_1)
+      expect(customer_array.first["attributes"]["first_name"]).to eq(first_name_1)
+      expect(customer_array.last["attributes"]["first_name"]).to eq(first_name_1)
     end
 
     it "can find all customers by a last name" do
@@ -142,11 +142,11 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      customer_array = JSON.parse(response.body)
+      customer_array = JSON.parse(response.body)["data"]
 
       expect(customer_array.length).to eq(2)
-      expect(customer_array.first["last_name"]).to eq(last_name_1)
-      expect(customer_array.last["last_name"]).to eq(last_name_1)
+      expect(customer_array.first["attributes"]["last_name"]).to eq(last_name_1)
+      expect(customer_array.last["attributes"]["last_name"]).to eq(last_name_1)
     end
 
     it "can find all customers by a created_at datetime" do
@@ -162,11 +162,11 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      json_customer_array = JSON.parse(response.body)
+      json_customer_array = JSON.parse(response.body)["data"]
 
       expect(json_customer_array.length).to eq(2)
-      expect(json_customer_array.first["id"]).to eq(id_1)
-      expect(json_customer_array.last["id"]).to eq(id_3)
+      expect(json_customer_array.first["id"].to_i).to eq(id_1)
+      expect(json_customer_array.last["id"].to_i).to eq(id_3)
     end
 
     it "can find all customers by a updated_at datetime" do
@@ -182,11 +182,11 @@ describe "Customer Record Endpoints" do
 
       expect(response).to be_successful
 
-      json_customer_array = JSON.parse(response.body)
+      json_customer_array = JSON.parse(response.body)["data"]
 
       expect(json_customer_array.length).to eq(2)
-      expect(json_customer_array.first["id"]).to eq(id_1)
-      expect(json_customer_array.last["id"]).to eq(id_3)
+      expect(json_customer_array.first["id"].to_i).to eq(id_1)
+      expect(json_customer_array.last["id"].to_i).to eq(id_3)
     end
 
   end

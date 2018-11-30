@@ -1,5 +1,6 @@
 class Api::V1::Customers::CustomersFavMerchController < ApplicationController
   def show
-    render json: Customer.customers_fav_merch(params[:id])
+    og_json = Customer.customers_fav_merch(params[:id])
+    render json: CustomersFavMerchSerializer.new(og_json)
   end
 end
