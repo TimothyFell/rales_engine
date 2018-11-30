@@ -25,7 +25,7 @@ describe "Item Business Intelligence Endpoints" do
 
       best_date = JSON.parse(response.body)["best_day"]
       best_datetime = Time.zone.parse(best_date)
-      
+
       expect(best_datetime).to eq(i_5["created_at"])
     end
 
