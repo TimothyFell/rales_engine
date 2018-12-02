@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       namespace :items do
-        get 'item_invoice_items/show'
+        get 'item_best_revenue/index'
       end
     end
   end
@@ -29,12 +29,14 @@ Rails.application.routes.draw do
       resources :customers, only: [:index, :show]
 
       namespace :items do
-        get '/:id/best_day', to: 'items_best_day#show'
         get '/find_all', to: 'item_search#index'
         get '/find', to: 'item_search#show'
-        get '/random.json', to: 'item_search#show'
+        get '/most_items', to: 'item_best_quantity#index'
+        get '/most_revenue', to: 'item_best_revenue#index'
         get '/:id/merchant', to: 'item_merchant#show'
         get '/:id/invoice_items', to: 'item_invoice_items#show'
+        get '/:id/best_day', to: 'items_best_day#show'
+        get '/random.json', to: 'item_search#show'
       end
       resources :items, only: [:index, :show]
 
