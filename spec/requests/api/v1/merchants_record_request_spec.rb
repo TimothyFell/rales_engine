@@ -12,7 +12,7 @@ describe "Merchants Record Endpoints" do
 
       expect(response).to be_successful
 
-      merchants = JSON.parse(response.body)
+      merchants = JSON.parse(response.body)["data"]
 
       expect(merchants.count).to eq(3)
     end
@@ -25,9 +25,9 @@ describe "Merchants Record Endpoints" do
 
       expect(response).to be_successful
 
-      merchant = JSON.parse(response.body)
+      merchant = JSON.parse(response.body)["data"]
 
-      expect(merchant["id"]).to eq(id)
+      expect(merchant["id"].to_i.to_i).to eq(id)
     end
 
   end
@@ -41,9 +41,9 @@ describe "Merchants Record Endpoints" do
 
       expect(response).to be_successful
 
-      merchant = JSON.parse(response.body)
+      merchant = JSON.parse(response.body)["data"]
 
-      expect(merchant["id"]).to eq(id)
+      expect(merchant["id"].to_i).to eq(id)
     end
 
     it "can find a merchant by their name" do
@@ -53,9 +53,9 @@ describe "Merchants Record Endpoints" do
 
       expect(response).to be_successful
 
-      merchant = JSON.parse(response.body)
+      merchant = JSON.parse(response.body)["data"]
 
-      expect(merchant["name"]).to eq(name)
+      expect(merchant["attributes"]["name"]).to eq(name)
     end
 
     it "can find a merchant by their created_at datetime" do
@@ -67,9 +67,9 @@ describe "Merchants Record Endpoints" do
 
       expect(response).to be_successful
 
-      json_merchant = JSON.parse(response.body)
+      json_merchant = JSON.parse(response.body)["data"]
 
-      expect(json_merchant["id"]).to eq(id)
+      expect(json_merchant["id"].to_i).to eq(id)
     end
 
     it "can find a merchant by their updated_at datetime" do
@@ -81,9 +81,9 @@ describe "Merchants Record Endpoints" do
 
       expect(response).to be_successful
 
-      json_merchant = JSON.parse(response.body)
+      json_merchant = JSON.parse(response.body)["data"]
 
-      expect(json_merchant["id"]).to eq(id)
+      expect(json_merchant["id"].to_i).to eq(id)
     end
 
   end
@@ -99,10 +99,10 @@ describe "Merchants Record Endpoints" do
 
       expect(response).to be_successful
 
-      merchant_array = JSON.parse(response.body)
+      merchant_array = JSON.parse(response.body)["data"]
 
       expect(merchant_array.length).to eq(1)
-      expect(merchant_array.first["id"]).to eq(id_1)
+      expect(merchant_array.first["id"].to_i).to eq(id_1)
     end
 
     it "can find all merchants by a name" do
@@ -114,12 +114,12 @@ describe "Merchants Record Endpoints" do
 
       expect(response).to be_successful
 
-      merchant_array = JSON.parse(response.body)
+      merchant_array = JSON.parse(response.body)["data"]
 
       expect(merchant_array.length).to eq(3)
-      expect(merchant_array.first["name"]).to eq(name_1)
-      expect(merchant_array[1]["name"]).to eq(name_1)
-      expect(merchant_array.last["name"]).to eq(name_1)
+      expect(merchant_array.first["attributes"]["name"]).to eq(name_1)
+      expect(merchant_array[1]["attributes"]["name"]).to eq(name_1)
+      expect(merchant_array.last["attributes"]["name"]).to eq(name_1)
     end
 
     it "can find all merchants by a created_at datetime" do
@@ -135,11 +135,11 @@ describe "Merchants Record Endpoints" do
 
       expect(response).to be_successful
 
-      json_merchant_array = JSON.parse(response.body)
+      json_merchant_array = JSON.parse(response.body)["data"]
 
       expect(json_merchant_array.length).to eq(2)
-      expect(json_merchant_array.first["id"]).to eq(id_1)
-      expect(json_merchant_array.last["id"]).to eq(id_3)
+      expect(json_merchant_array.first["id"].to_i).to eq(id_1)
+      expect(json_merchant_array.last["id"].to_i).to eq(id_3)
     end
 
     it "can find all merchants by an updated_at datetime" do
@@ -155,11 +155,11 @@ describe "Merchants Record Endpoints" do
 
       expect(response).to be_successful
 
-      json_merchant_array = JSON.parse(response.body)
+      json_merchant_array = JSON.parse(response.body)["data"]
 
       expect(json_merchant_array.length).to eq(2)
-      expect(json_merchant_array.first["id"]).to eq(id_1)
-      expect(json_merchant_array.last["id"]).to eq(id_3)
+      expect(json_merchant_array.first["id"].to_i).to eq(id_1)
+      expect(json_merchant_array.last["id"].to_i).to eq(id_3)
     end
 
   end
