@@ -2,22 +2,6 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      namespace :merchants do
-        get 'merchant_best_revenue/index'
-      end
-    end
-  end
-
-  namespace :api do
-    namespace :v1 do
-      namespace :merchants do
-        get 'merchant_best_quantity/index'
-      end
-    end
-  end
-
-  namespace :api do
-    namespace :v1 do
 
       namespace :merchants do
         get '/find_all', to: 'merchant_search#index'
@@ -32,9 +16,9 @@ Rails.application.routes.draw do
         get '/:id/favorite_merchant', to: 'customers_fav_merch#show'
         get '/find_all', to: 'customer_search#index'
         get '/find', to: 'customer_search#show'
-        get '/random.json', to: 'customer_search#show'
         get '/:id/invoices', to: 'customer_invoices#show'
         get '/:id/transactions', to: 'customer_transactions#show'
+        get '/random.json', to: 'customer_search#show'
       end
       resources :customers, only: [:index, :show]
 
@@ -49,6 +33,13 @@ Rails.application.routes.draw do
         get '/random.json', to: 'item_search#show'
       end
       resources :items, only: [:index, :show]
+
+      namespace :invoices do
+        get '/find_all', to: 'invoice_search#index'
+        get '/find', to: 'invoice_search#show'
+        get '/random.json', to: 'invoice_search#show'
+      end
+      resources :invoices, only: [:index, :show]
 
     end
   end
