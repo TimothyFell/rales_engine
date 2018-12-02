@@ -2,8 +2,16 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      namespace :items do
-        get 'item_best_revenue/index'
+      namespace :merchants do
+        get 'merchant_best_revenue/index'
+      end
+    end
+  end
+
+  namespace :api do
+    namespace :v1 do
+      namespace :merchants do
+        get 'merchant_best_quantity/index'
       end
     end
   end
@@ -14,6 +22,8 @@ Rails.application.routes.draw do
       namespace :merchants do
         get '/find_all', to: 'merchant_search#index'
         get '/find', to: 'merchant_search#show'
+        get '/most_items', to: 'merchant_best_quantity#index'
+        get '/most_revenue', to: 'merchant_best_revenue#index'
         get '/random.json', to: 'merchant_search#show'
       end
       resources :merchants, only: [:index, :show]
