@@ -2,6 +2,14 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      namespace :customers do
+        get 'customer_transactions/show'
+      end
+    end
+  end
+
+  namespace :api do
+    namespace :v1 do
 
       namespace :merchants do
         get '/find_all', to: 'merchant_search#index'
@@ -15,6 +23,8 @@ Rails.application.routes.draw do
         get '/find_all', to: 'customer_search#index'
         get '/find', to: 'customer_search#show'
         get '/random.json', to: 'customer_search#show'
+        get '/:id/invoices', to: 'customer_invoices#show'
+        get '/:id/transactions', to: 'customer_transactions#show'
       end
       resources :customers, only: [:index, :show]
 
