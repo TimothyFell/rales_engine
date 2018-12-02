@@ -38,9 +38,9 @@ describe "Merchant Business Intelligence Endpoints" do
         get "/api/v1/merchants/most_revenue?quantity=3"
 
         best_merchants = JSON.parse(response.body)["data"]
-        first_revenue = best_merchants[0]["attributes"]["revenue"].to_i
-        second_revenue = best_merchants[1]["attributes"]["revenue"].to_i
-        third_revenue = best_merchants[2]["attributes"]["revenue"].to_i
+        first_revenue = best_merchants[0]["attributes"]["revenue"]
+        second_revenue = best_merchants[1]["attributes"]["revenue"]
+        third_revenue = best_merchants[2]["attributes"]["revenue"]
 
         expect(best_merchants.count).to eq(3)
         expect(best_merchants.first["id"].to_i).to eq(merch_id_5)

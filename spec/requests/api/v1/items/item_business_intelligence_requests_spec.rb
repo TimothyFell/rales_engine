@@ -33,9 +33,9 @@ describe "Item Business Intelligence Endpoints" do
       get "/api/v1/items/most_revenue?quantity=3"
 
       best_items = JSON.parse(response.body)["data"]
-      first_revenue = best_items[0]["attributes"]["revenue"].to_i
-      second_revenue = best_items[1]["attributes"]["revenue"].to_i
-      third_revenue = best_items[2]["attributes"]["revenue"].to_i
+      first_revenue = best_items[0]["attributes"]["revenue"]
+      second_revenue = best_items[1]["attributes"]["revenue"]
+      third_revenue = best_items[2]["attributes"]["revenue"]
 
       expect(best_items.count).to eq(3)
       expect(best_items.first["id"].to_i).to eq(item_id_5)
