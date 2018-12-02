@@ -23,7 +23,7 @@ describe "Item Business Intelligence Endpoints" do
 
       get "/api/v1/items/#{item_id}/best_day"
 
-      best_date = JSON.parse(response.body)["best_day"]
+      best_date = JSON.parse(response.body)["data"]["attributes"]["best_day"]
       best_datetime = Time.zone.parse(best_date)
 
       expect(best_datetime).to eq(i_5["created_at"])

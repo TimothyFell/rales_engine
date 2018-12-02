@@ -4,7 +4,7 @@ class Item < ApplicationRecord
   belongs_to :merchant
 
   def self.best_day(id)
-    Invoice.select("invoices.created_at AS best_day, sum(invoice_items.quantity) AS units")
+    Invoice.select("invoices.created_at, sum(invoice_items.quantity) AS units")
     .joins(:invoice_items)
     .where("invoice_items.item_id = #{id}")
     .group("invoices.id")
