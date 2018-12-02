@@ -5,7 +5,12 @@ class Api::V1::Customers::CustomerSearchController < ApplicationController
   end
 
   def show
-    render json: CustomerSerializer.new(Customer.find_by(look_up_params))
+    if look_up_params != nil
+      render json: CustomerSerializer.new(Customer.find_by(look_up_params))
+    else
+      render json: CustomerSerializer.new(Customer.random)
+    end
+
   end
 
   private

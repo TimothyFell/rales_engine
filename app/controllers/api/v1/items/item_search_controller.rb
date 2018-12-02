@@ -1,12 +1,16 @@
 class Api::V1::Items::ItemSearchController < ApplicationController
-  
+
   def index
-    render json: Item.where(look_up_params)
+    render json: ItemSerializer.new(Item.where(look_up_params))
 
   end
 
   def show
-    render json: Item.find(look_up_params)
+    if look_up_params != nil
+      render json: ItemSerializer.new(Item.find_by(look_up_params))
+    else
+      render json: ItemSerializer.new(Item.random)
+    end
   end
 
   private

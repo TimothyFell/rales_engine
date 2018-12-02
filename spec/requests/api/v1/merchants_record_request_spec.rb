@@ -164,4 +164,29 @@ describe "Merchants Record Endpoints" do
 
   end
 
+  describe 'Random Enpoint' do
+
+    it 'should return a random record' do
+      merch_1 = create(:merchant)
+      merch_2 = create(:merchant)
+      merch_3 = create(:merchant)
+      merch_4 = create(:merchant)
+      merch_5 = create(:merchant)
+      merch_6 = create(:merchant)
+      merch_7 = create(:merchant)
+      merch_8 = create(:merchant)
+      merch_9 = create(:merchant)
+      merch_10 = create(:merchant)
+
+      merch_ids = Merchant.all.pluck(:id)
+
+      get '/api/v1/merchants/random.json'
+
+      rand_merch = JSON.parse(response.body)["data"]
+
+      expect(merch_ids).to include(rand_merch["id"].to_i)
+    end
+
+  end
+
 end
