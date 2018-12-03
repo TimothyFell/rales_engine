@@ -5,7 +5,7 @@ class Api::V1::Customers::CustomerSearchController < ApplicationController
   end
 
   def show
-    if look_up_params != nil
+    if !look_up_params.empty?
       render json: CustomerSerializer.new(Customer.find_by(look_up_params))
     else
       render json: CustomerSerializer.new(Customer.random)

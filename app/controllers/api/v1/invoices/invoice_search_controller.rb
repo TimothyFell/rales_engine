@@ -4,8 +4,7 @@ class Api::V1::Invoices::InvoiceSearchController < ApplicationController
   end
 
   def show
-
-    if look_up_params != nil
+    if !look_up_params.empty?
       render json: InvoiceSerializer.new(Invoice.find_by(look_up_params))
     else
       render json: InvoiceSerializer.new(Invoice.random)

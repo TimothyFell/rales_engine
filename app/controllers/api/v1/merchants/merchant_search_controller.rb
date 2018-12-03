@@ -5,7 +5,7 @@ class Api::V1::Merchants::MerchantSearchController < ApplicationController
   end
 
   def show
-    if look_up_params != nil
+    if !look_up_params.empty?
       render json: MerchantSerializer.new(Merchant.find_by(look_up_params))
     else
       render json: MerchantSerializer.new(Merchant.random)
