@@ -91,6 +91,23 @@ describe "Invoices Record Endpoints" do
       expect(invoice["attributes"]["invoice_id"]).to eq(inv.id)
     end
 
+    it "can find the first invoice_item by a unit_price" do
+      merch = create(:merchant)
+      customer = create(:customer)
+      item = create(:item, merchant_id: merch.id)
+      inv = create(:invoice, merchant_id: merch.id, customer_id: customer.id)
+      ii_1 = create(:invoice_item, invoice_id: inv.id,item_id: item.id )
+      ii_2 = create(:invoice_item, invoice_id: inv.id,item_id: item.id )
+
+      get "/api/v1/invoice_items/find?unit_price=#{ii_1.unit_price}"
+
+      expect(response).to be_successful
+
+      invoice = JSON.parse(response.body)["data"]
+
+      expect(invoice["attributes"]["id"]).to eq(ii_1.id)
+    end
+
     it "can find an invoice_item by its created_at datetime" do
       merch = create(:merchant)
       customer = create(:customer)
