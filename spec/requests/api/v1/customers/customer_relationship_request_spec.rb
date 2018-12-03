@@ -31,7 +31,7 @@ describe "Customer Relationship Endpoints" do
   end
 
   describe 'Transaction Request' do
-    xit 'should return a list of the customers transactions' do
+    it 'should return a list of the customers transactions' do
       c = create(:customer)
       c_id = c.id
 
@@ -54,7 +54,6 @@ describe "Customer Relationship Endpoints" do
       get "/api/v1/customers/#{c_id}/transactions"
 
       response_data = JSON.parse(response.body)["data"]
-      binding.pry
 
       transactions = response_data["relationships"]["transactions"]["data"]
 
