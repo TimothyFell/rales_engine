@@ -6,7 +6,7 @@ class Api::V1::Items::ItemSearchController < ApplicationController
   end
 
   def show
-    if look_up_params != nil
+    if !look_up_params.empty?
       render json: ItemSerializer.new(Item.find_by(look_up_params))
     else
       render json: ItemSerializer.new(Item.random)
